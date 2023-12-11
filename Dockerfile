@@ -1,3 +1,7 @@
-FROM ubuntu:22.04
-RUN apt update && apt install nginx -y
-CMD ["nginx", "-g", "daemon off;"]
+FROM ubuntu 
+RUN apt update 
+RUN apt install –y apache2 
+RUN apt install –y apache2-utils 
+RUN apt clean 
+EXPOSE 80
+CMD [“apache2ctl”, “-D”, “FOREGROUND”]
