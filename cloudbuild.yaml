@@ -27,13 +27,6 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'list']
 
-  - name: 'gcr.io/cloud-builders/docker'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        echo "$DOCKER_AUTH" | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
-
     
 
   - name: 'gcr.io/cloud-builders/gcloud'
