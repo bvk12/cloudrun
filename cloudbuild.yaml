@@ -33,8 +33,15 @@ steps:
       - '-c'
       - |
         echo "$_SVC_ACC_JSON" | base64 --decode > /tmp/service-account-key.json
+        echo "Content of /tmp/service-account-key.json:"
         cat /tmp/service-account-key.json  
-        gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
+        if [ -s /tmp/service-account-key.json ]; then
+          gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
+        else
+          echo "Error: JSON key file is empty."
+          exit 1
+        fi
+        
 
       - 'auth'
       - 'compute'
