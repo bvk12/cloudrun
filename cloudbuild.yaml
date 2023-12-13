@@ -6,13 +6,19 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
 
-  - name: gcr.io/cloud-builders/gcloud
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Connect to instance
+    entrypoint: /bin/sh
     args:
-      - '-c'
-      - >
-        gcloud config set project ${PROJECT_ID}    
-        gcloud compute ssh gitlab-runner --zone us-central1-a --quiet
-        gcloud compute ssh --zone "us-central1-a" "gitlab-runner" --project "iconic-post-406804" --quiet
+    - '-c'
+    - |
+      mkdir -p ~/root/.ssh && \\
+      gcloud secrets versions access latest --secret=cloud-build-ssh-key > ~/root/.ssh/id_rsa && \\
+      chmod 600 ~/root/.ssh/id_rsa && \\
+      gcloud secrets versions access latest --secret=cloud-build-ssh-key-pub > ~/root/.ssh/id_rsa.pub && \\
+      chmod 600 ~/root/.ssh/id_rsa.pub && \\
+      set -x && \\
+      gcloud compute ssh gitlab-runner --ssh-key-file=~/root/.ssh/id_rsa --zone=us-central1-a
         
         
        
