@@ -1,9 +1,5 @@
 steps:
-
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['login', '-u', '_json_key', '--password-stdin', 'gcr.io']
    
-
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
              'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}', '.']
@@ -30,6 +26,17 @@ steps:
 #      docker run -d -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'list']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "$DOCKER_AUTH" | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
+secrets:
+  - secretManager:
+      versionName: projects/${PROJECT_ID}/secrets/DOCKER_AUTH/version/bvk
+      env: 'DOCKER_AUTH'
     
 
   - name: 'gcr.io/cloud-builders/gcloud'
