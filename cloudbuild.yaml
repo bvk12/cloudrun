@@ -6,6 +6,17 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
 
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
-    args: ['run', 'deploy', 'cloudrun-demo', '--image', 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - '-c'
+      - >
+        gcloud compute ssh gitlab-runner --zone us-central1-a
+        gcloud compute ssh --zone "us-central1-a" "gitlab-runner" --project "iconic-post-406804"
+        gcloud computer scp --recursive section gitlab-runner: --zone us-central1-a
+        gcloud compute instances create-with-container gitlab-runner --container-image us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}
+       
+    entrypoint: bash
+
+  #- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+   # entrypoint: gcloud
+   # args: ['run', 'deploy', 'cloudrun-demo', '--image', 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
