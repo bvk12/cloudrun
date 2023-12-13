@@ -27,25 +27,30 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'list']
 
-  
-
-    
-
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        auth'
         echo "$_SVC_ACC_JSON" > /tmp/service-account-key.json
         gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
-        compute
-        ssh
-        gitlab-runner
-        --project=${PROJECT_ID}
-        --zone=us-central1-a
         gcloud auth configure-docker us-central1-docker.pkg.dev
-        --command= docker pull us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA} && docker run -d --name bvk -p 8080:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}
+  
+
+    
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    
+    args:
+     
+      - 'auth'
+      - 'compute'
+      - 'ssh'
+      - 'gitlab-runner'
+      - '--project=${PROJECT_ID}'
+      - '--zone=us-central1-a'
+      - 'gcloud auth configure-docker us-central1-docker.pkg.dev'
+      - '--command= docker pull us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA} && docker run -d --name bvk -p 8080:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
 
 #  - name: 'gcr.io/cloud-builders/docker'
 #    args: ['pull', 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
