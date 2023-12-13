@@ -34,8 +34,8 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'auth'
-      -  echo "$_SVC_ACC_JSON" > /tmp/service-account-key.json
-      -  gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
+      - 'echo "$_SVC_ACC_JSON" > /tmp/service-account-key.json'
+      - 'gcloud auth activate-service-account --key-file=/tmp/service-account-key.json'
       - 'compute'
       - 'ssh'
       - 'gitlab-runner'
