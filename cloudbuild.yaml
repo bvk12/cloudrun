@@ -20,9 +20,7 @@ steps:
       set -x && \\
       gcloud compute ssh gitlab-runner --ssh-key-file=~/root/.ssh/id_rsa --zone=us-central1-a
         
-        
-       
-    entrypoint: bash
+  
 
   #- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    # entrypoint: gcloud
