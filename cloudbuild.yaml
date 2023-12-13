@@ -1,4 +1,9 @@
 steps:
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['login', '-u', '_json_key', '--password-stdin', 'gcr.io']
+    secretEnv: ['DOCKER_AUTH']
+
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
              'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}', '.']
@@ -25,6 +30,16 @@ steps:
 #      docker run -d -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'list']
+    
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'compute'
+      - 'ssh'
+      - 'gitlab-runner'
+      - '--project=${PROJECT_ID}'
+      - '--zone=us-central1-a'
+      - '--command= docker pull us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA} && docker run -d --name bvk -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
 
 #  - name: 'gcr.io/cloud-builders/docker'
 #    args: ['pull', 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
@@ -32,9 +47,9 @@ steps:
 #  - name: 'gcr.io/cloud-builders/gcloud'
 #    args: ['bash', '-c', 'docker run -d --name  -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['compute', 'ssh', 'gitlab-runner', '--project=${PROJECT_ID}', '--zone=us-central1-a', '--command=docker run -d --name bvk -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
-
+#  - name: 'gcr.io/cloud-builders/gcloud'
+#    args: ['compute', 'ssh', 'gitlab-runner', '--project=${PROJECT_ID}', '--zone=us-central1-a', '--command=docker run -d --name bvk -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
+ #   secretEnv: ['DOCKER_AUTH']
 #  - name: 'gcr.io/cloud-builders/gcloud'
 #    args: ['compute', 'ssh', 'gitlab-runner', '--zone=us-central1-a', '--command', 'docker run -d -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
 
