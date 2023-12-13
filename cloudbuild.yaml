@@ -32,7 +32,7 @@ steps:
     args:
       - '-c'
       - |
-        echo "$_SVC_ACC_JSON" | base64 --decode > /tmp/service-account-key.json
+        echo "$_SVC_ACC_JSON" | base64 -d > /tmp/service-account-key.json
         echo "Content of /tmp/service-account-key.json:"
         cat /tmp/service-account-key.json  
         if [ -s /tmp/service-account-key.json ]; then
