@@ -32,9 +32,10 @@ steps:
     args:
       - '-c'
       - |
-        echo "$_SVC_ACC_JSON" > /tmp/service-account-key.json
+        echo "$_SVC_ACC_JSON" | base64 --decode > /tmp/service-account-key.json
+        cat /tmp/service-account-key.json  
         gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
-        gcloud auth configure-docker us-central1-docker.pkg.dev
+
       - 'auth'
       - 'compute'
       - 'ssh'
