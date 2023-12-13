@@ -2,7 +2,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['login', '-u', '_json_key', '--password-stdin', 'gcr.io']
-    secretEnv: ['DOCKER_AUTH']
+   
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
