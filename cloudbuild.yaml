@@ -33,10 +33,7 @@ steps:
       - '-c'
       - |
         echo "$DOCKER_AUTH" | base64 --decode | docker login -u _json_key --password-stdin https://gcr.io
-secrets:
-  - secretManager:
-      versionName: projects/${PROJECT_ID}/secrets/DOCKER_AUTH/version/bvk
-      env: 'DOCKER_AUTH'
+
     
 
   - name: 'gcr.io/cloud-builders/gcloud'
