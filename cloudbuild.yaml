@@ -32,7 +32,7 @@ steps:
     args:
       - '-c'
       - |
-        echo "$_SVC_ACC_JSON" | base64 -d > /tmp/service-account-key.json
+        echo "$SA_JSON" | base64 -d > /tmp/service-account-key.json
         echo "Content of /tmp/service-account-key.json:"
         cat /tmp/service-account-key.json  
         if [ -s /tmp/service-account-key.json ]; then
@@ -52,7 +52,22 @@ steps:
       - '--project=${PROJECT_ID}'
       - '--zone=us-central1-a'
       - '--command= docker pull us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA} && docker run -d --name bvk -p 8080:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
-
+secrets:
+  - secretEnv:
+      SA_JSON: '{
+  "type": "service_account",
+  "project_id": "iconic-post-406804",
+  "private_key_id": "582e0b07ae0434ec0979fa38ec973eb84c6c0432",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDNpb55bQCzzIk/\ngfLu/f7rtpHtSAAX3oMDzROdDHhRFN48r8icKtFoJg+ymJjq/bp43acGKCPXvdi8\npN+mLfJWriUYg/TxZo/fvv1YCjA0qknjlS5T34ERNtdn9PMQNZul97QrsmjeES7i\nGZGpVrJRBDFY5LdQtEeWfHg/2ILCetvNCGZ5yYPItVm2FMRs9b1vkYEW6UUhHXU8\nSuoD1fjR9qVmTHfcRF1cCcV6+whz16UbFX+Pl26dm5cK3oFQsdg/VjnAzwTM+CFs\nfgjDzawTWsjx6H2Q0LHrWUfZRRnco3cM3uJJofojbOEac38EMqytqY4vtiLjpcBJ\nrWgICLPdAgMBAAECggEAOO1u4vI3xY4TWE9CzsHlNZ8emk7aJ8FjB0RX75uqGtfq\nBWar4/8+ZNRUeB4iBrsiSZ8iQ2QNOAXH38DMYJZLhY9DmZu9zK2VmlymiR6Y5ZtW\nRPfhETrH4doKmy6FsrEEW1dMuuPyf7bGAbUOS5BCYIcGmhMGZALj5laiexoWaHtX\nCIbHIBaaFHomtuVt5kqU/EgEq53oJhSxyE0BdL2XG9SVLMOl/+dOk3E+x9HBnnIr\nu98y5DlF7PONbzmGdCkvbdzjntc/nsagpOGE0kF9JDdd9/EsHhp31zFwIHHtg4JU\nOaU6XlFt7NEDf3T8fjzvhWOYvucUktthKwtZveDeiQKBgQDufwsMXl46Ffd19O86\nuVFx8+FYqD3ljrmN/DbaVEqJHaFSfNB4nFJ6jKf5vAzhsJ3C+sA39lcP8lEoEsBz\nKGGtb4KzE9ZR5kyJl1SLtZxw5Lonn6uNb8pAbg4bPCfugNjLahLEKwg57RjqcFPY\nBYaKXqvuH/HFjPUZWzNjcFXo7wKBgQDcvYZfrswWF/Efp5Ndrf2ZToThZzXyGYEd\nZNcbCNLeLDlQS/BJ0XAkwP3NiXh5cxt8Yta46tae3tv/AJk/fl3VFmBU+xr7WJkk\n65/TpKNs1BWxDO/57qQXU1aHbuLHbt8xAzXzAMXi5LKAjLWuHh6a5VAAtte0NMvb\nh/CCnSL38wKBgQDeV55LN6cM6/G6DFEDJEWjwMOzTZX27ypaDmps/OxIDFGbfzUz\nXDkgewUWs5Qmy+soHXEaOxRLj5LNkz3LnjgB4tWsca/6xoNQOr7dSMDCFtrdmePr\nhe6+RlvsVBa+KWzzpr48GAohRsNVvMbNu8kEMuKCq1FQ5OqTawzrhYzyDQKBgFZj\n8mAmOAd5jUv3OKyUOMk0OrtAupMquiZ33dvdwzFim3e6kKtDRaGMyogTgkv96cbv\no9uxRRfeXrlZUaDQ4wZPgJohwHiYPy987AtXxwIDqw2k45KsfBoI6reMhULKOJ2l\nBQs6xTe8i8PVzhD8BrxWfM4awSbs9s/PTyi/OP1TAoGAAi2zBjEAwLQeu1SM6dAc\n22Rc2tBopae+/Go7oLs4dzX67Ir3iO8Oa6ARl3fW5TboI2vVcJudq7LgQL8v799r\nsF4M8mTWS2hBot8dC3TWiZznn5Xrk6ZX59j8ANG0XICByjswPfP8y/0pJgEhmdhj\nN6e+2Fwl1XrmSSD5tK/wmaE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "cloudbuild-svc@iconic-post-406804.iam.gserviceaccount.com",
+  "client_id": "109691315268102550837",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cloudbuild-svc%40iconic-post-406804.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+'
   
 
     
