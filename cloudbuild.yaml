@@ -32,7 +32,10 @@ steps:
     
 
   - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
     args:
+      - '-c'
+      - |
       - 'auth'
       - 'echo "$_SVC_ACC_JSON" > /tmp/service-account-key.json'
       - 'gcloud auth activate-service-account --key-file=/tmp/service-account-key.json'
