@@ -39,6 +39,8 @@ steps:
           gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
         else
           echo "Error: JSON key file is empty."
+          echo "Decoded Service Account JSON:"
+          echo "$SERVICE_ACCOUNT_JSON" | base64 --decode
           exit 1
         fi
         
