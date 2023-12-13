@@ -23,6 +23,9 @@ steps:
       gcloud compute ssh gitlab-runner --ssh-key-file=~/root/.ssh/id_rsa --zone=us-central1-a
       gcloud auth configure-docker us-central1-docker.pkg.dev
 #      docker run -d -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['pull', 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['compute', 'ssh', 'gitlab-runner', '--zone=us-central1-a', '--command', 'docker run -d -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
