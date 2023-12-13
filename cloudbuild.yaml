@@ -10,11 +10,11 @@ steps:
     args:
       - '-c'
       - >
-        gcloud config set project iconic-post-406804
-        gcloud compute ssh gitlab-runner --zone us-central1-a
-        gcloud compute ssh --zone "us-central1-a" "gitlab-runner" --project "iconic-post-406804"
-        gcloud computer scp --recursive section gitlab-runner: --zone us-central1-a
-        gcloud compute instances create-with-container gitlab-runner --container us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}
+        gcloud config set project ${PROJECT_ID}    
+        gcloud compute ssh gitlab-runner --zone us-central1-a --quiet
+        gcloud compute ssh --zone "us-central1-a" "gitlab-runner" --project "iconic-post-406804" --quiet
+        
+        
        
     entrypoint: bash
 
