@@ -45,7 +45,7 @@ steps:
         fi
         
 
-      - 'auth'
+      
       - 'compute'
       - 'ssh'
       - 'gitlab-runner'
