@@ -2,10 +2,10 @@ steps:
    
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-             'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}', '.']
+             'gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}', '.']
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push',  'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
+    args: ['push',  'gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}']
 
   
 
@@ -23,7 +23,7 @@ steps:
       set -x && \\
       gcloud compute ssh gitlab-runner --ssh-key-file=~/root/.ssh/id_rsa --zone=us-central1-a
       gcloud auth configure-docker us-central1-docker.pkg.dev
-#      docker run -d -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
+#      docker run -d -p 80:8080 gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}'
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['auth', 'list']
 
@@ -36,30 +36,30 @@ steps:
       - 'gitlab-runner'
       - '--project=${PROJECT_ID}'
       - '--zone=us-central1-a'
-      - '--command= docker pull us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA} && docker run -d --name bvk -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}'
+      - '--command= docker pull gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA} && docker run -d --name bvk -p 80:8080 gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}'
 
 #  - name: 'gcr.io/cloud-builders/docker'
-#    args: ['pull', 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
+#    args: ['pull', 'gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}']
 
 #  - name: 'gcr.io/cloud-builders/gcloud'
-#    args: ['bash', '-c', 'docker run -d --name  -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
+#    args: ['bash', '-c', 'docker run -d --name  -p 80:8080 gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}']
 
 #  - name: 'gcr.io/cloud-builders/gcloud'
-#    args: ['compute', 'ssh', 'gitlab-runner', '--project=${PROJECT_ID}', '--zone=us-central1-a', '--command=docker run -d --name bvk -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
+#    args: ['compute', 'ssh', 'gitlab-runner', '--project=${PROJECT_ID}', '--zone=us-central1-a', '--command=docker run -d --name bvk -p 80:8080 gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}']
  #   secretEnv: ['DOCKER_AUTH']
 #  - name: 'gcr.io/cloud-builders/gcloud'
-#    args: ['compute', 'ssh', 'gitlab-runner', '--zone=us-central1-a', '--command', 'docker run -d -p 80:8080 us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}']
+#    args: ['compute', 'ssh', 'gitlab-runner', '--zone=us-central1-a', '--command', 'docker run -d -p 80:8080 gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}']
 
       
       
-#      gcloud compute instances create-with-container gitlab-runner --zone=us-central1-a --container-image us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}
-#      gcloud compute instances update-container gitlab-runner --zone=us-central1-a --container-image us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA} 
-#      gcloud compute instances update-container gitlab-runner12 --zone=us-central1-a --container-image us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA} 
-#      gcloud compute instances create-with-container gitlab-runner12 --zone=us-central1-a --container-image us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}
+#      gcloud compute instances create-with-container gitlab-runner --zone=us-central1-a --container-image gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}
+#      gcloud compute instances update-container gitlab-runner --zone=us-central1-a --container-image gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA} 
+#      gcloud compute instances update-container gitlab-runner12 --zone=us-central1-a --container-image gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA} 
+#      gcloud compute instances create-with-container gitlab-runner12 --zone=us-central1-a --container-image gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}
       
         
   
 
   #- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    # entrypoint: gcloud
-   # args: ['run', 'deploy', 'cloudrun-demo', '--image', 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloudrun-art/cloudrun-art:${SHORT_SHA}', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+   # args: ['run', 'deploy', 'cloudrun-demo', '--image', 'gcr.io/${PROJECT_ID}/cloudrun-art6:${SHORT_SHA}', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
